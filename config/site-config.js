@@ -1,7 +1,7 @@
 const SITE_CONFIG = {
     profile: {
         name: "Md. Rayshudul Islam Shawon",
-        title: ">> 6+ YEARS EXP: SQA & QUANT TRADING",
+        title: ">> 6+ YEARS EXP: SQA ENGINEERING & QUANTITATIVE TRADING",
         bio: "Seasoned professional with over 6 years of dual-domain expertise. Driving automated test pipelines and rigorous QA architectures, alongside deploying robust quantitative strategies and market analysis across MetaTrader 5 and TradingView terminal nodes.",
         linkedin: "https://linkedin.com/in/rayshudul",
         email: "contact@rayshudul.com"
