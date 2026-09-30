@@ -86,8 +86,7 @@
                 <div class="relative mb-6 flex justify-center group">
                     <div class="absolute -inset-1 bg-emerald-500/30 rounded-full blur animate-pulse"></div>
                     <div class="relative w-28 h-28 rounded-full p-1 bg-black border-2 border-emerald-500 overflow-hidden shadow-[0_0_15px_rgba(0,255,102,0.4)]">
-                        <!-- Supports both .jpg and .png seamlessly -->
-                        <img id="profile-avatar" src="img/profile.jpg" alt="Md. Rayshudul Islam Shawon" onerror="this.onerror=null; this.src='img/profile.png';">
+                        <img id="profile-avatar" src="img/profile.jpg" alt="Profile" onerror="this.onerror=null; this.src='img/profile.png';">
                     </div>
                 </div>
                 
@@ -121,10 +120,10 @@
 
                     <div class="flex items-center gap-3 bg-emerald-950/20 p-2.5 rounded border border-emerald-500/20">
                         <div id="qrcode-container" class="w-14 h-14 bg-black p-1 rounded shrink-0 flex items-center justify-center border border-emerald-500/40">
-                            <img id="qr-img" src="" alt="Crypto QR Code" class="w-full h-full object-contain filter invert hue-rotate-90">
+                            <img id="qr-img" src="" alt="QR Code" class="w-full h-full object-contain filter invert hue-rotate-90">
                         </div>
                         <div class="overflow-hidden">
-                            <p class="text-[9px] font-mono text-emerald-500 uppercase tracking-wider" id="crypto-label">USDT (TRC20):</p>
+                            <p class="text-[9px] font-mono text-emerald-500 uppercase tracking-wider" id="crypto-label"></p>
                             <p id="crypto-address" class="text-[10px] font-mono text-emerald-300 truncate mt-0.5 select-all"></p>
                             <button onclick="copyAddress()" class="mt-1 text-[9px] font-mono bg-emerald-900 text-black font-bold px-2 py-0.5 rounded hover:bg-emerald-400 transition-colors">
                                 [COPY_HASH]
@@ -219,14 +218,13 @@
 
     </div>
 
-    <!-- External Config Script Linked Here -->
-    <script src="config/site-config.js"></script>
+    <!-- Config Script -->
+    <script src="config/site-config.js?v=3"></script>
 
-    <!-- Main Logic Script -->
     <script>
         window.addEventListener('DOMContentLoaded', () => {
-            loadSiteConfig();
-            
+            setTimeout(initApp, 50);
+
             setInterval(() => {
                 const now = new Date();
                 const clockElem = document.getElementById('live-clock');
@@ -238,35 +236,35 @@
             initMatrixCanvas();
         });
 
-        function loadSiteConfig() {
-            if (typeof SITE_CONFIG !== 'undefined') {
-                // Profile Information Mapping
+        function initApp() {
+            if (typeof window.SITE_CONFIG !== 'undefined') {
+                const config = window.SITE_CONFIG;
+
                 const nameElems = [document.getElementById('profile-name'), document.getElementById('profile-name-main')];
-                nameElems.forEach(el => { if (el) el.innerText = SITE_CONFIG.profile.name; });
+                nameElems.forEach(el => { if (el) el.innerText = config.profile.name; });
 
                 const titleElems = [document.getElementById('profile-title'), document.getElementById('profile-title-main')];
-                titleElems.forEach(el => { if (el) el.innerText = SITE_CONFIG.profile.title; });
+                titleElems.forEach(el => { if (el) el.innerText = config.profile.title; });
 
                 const bioElem = document.getElementById('profile-bio');
-                if (bioElem) bioElem.innerText = SITE_CONFIG.profile.bio;
+                if (bioElem) bioElem.innerText = config.profile.bio;
 
                 const linkedinLink = document.getElementById('linkedin-link');
-                if (linkedinLink) linkedinLink.href = SITE_CONFIG.profile.linkedin;
+                if (linkedinLink) linkedinLink.href = config.profile.linkedin;
 
                 const emailLink = document.getElementById('email-link');
-                if (emailLink) emailLink.href = 'mailto:' + SITE_CONFIG.profile.email;
+                if (emailLink) emailLink.href = 'mailto:' + config.profile.email;
 
                 const emailText = document.getElementById('email-text');
-                if (emailText) emailText.innerText = SITE_CONFIG.profile.email;
+                if (emailText) emailText.innerText = config.profile.email;
 
                 const footerCopyright = document.getElementById('footer-copyright');
-                if (footerCopyright) footerCopyright.innerText = `© 2026 ${SITE_CONFIG.profile.name}`;
+                if (footerCopyright) footerCopyright.innerText = `© 2026 ${config.profile.name}`;
 
-                // Initial load for Crypto and Trading Nodes from Config
                 updateCryptoPayment();
                 updateInvestorPlatform();
             } else {
-                setTimeout(loadSiteConfig, 50);
+                setTimeout(initApp, 100);
             }
         }
 
@@ -310,9 +308,9 @@
 
         function updateCryptoPayment() {
             const select = document.getElementById('crypto-selector');
-            if (!select || typeof SITE_CONFIG === 'undefined') return;
+            if (!select || typeof window.SITE_CONFIG === 'undefined') return;
             const selectedVal = select.value;
-            const data = SITE_CONFIG.cryptoWallets[selectedVal];
+            const data = window.SITE_CONFIG.cryptoWallets[selectedVal];
             if (!data) return;
             document.getElementById('crypto-label').innerText = data.label;
             document.getElementById('crypto-address').innerText = data.address;
@@ -327,9 +325,9 @@
 
         function updateInvestorPlatform() {
             const selElem = document.getElementById('platform-selector');
-            if (!selElem || typeof SITE_CONFIG === 'undefined') return;
+            if (!selElem || typeof window.SITE_CONFIG === 'undefined') return;
             const selVal = selElem.value;
-            const data = SITE_CONFIG.tradingNodes[selVal];
+            const data = window.SITE_CONFIG.tradingNodes[selVal];
             if (!data) return;
             document.getElementById('inv-platform').innerText = data.platform;
             document.getElementById('inv-server').innerText = data.server;
