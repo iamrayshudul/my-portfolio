@@ -62,6 +62,14 @@
             object-fit: cover;
             object-position: center;
         }
+        /* VIP Passport Holographic Watermark */
+        .passport-watermark {
+            background: linear-gradient(135deg, rgba(0, 255, 102, 0.15) 0%, rgba(0, 0, 0, 0.4) 50%, rgba(0, 255, 102, 0.2) 100%);
+            box-shadow: inset 0 0 10px rgba(0, 255, 102, 0.4);
+        }
+        .watermark-pattern {
+            background-image: repeating-linear-gradient(45deg, rgba(0, 255, 102, 0.08) 0, rgba(0, 255, 102, 0.08) 2px, transparent 0, transparent 8px);
+        }
     </style>
 </head>
 <body class="text-emerald-400 min-h-screen flex items-center justify-center p-4 sm:p-6 relative">
@@ -83,10 +91,19 @@
                     </button>
                 </div>
 
+                <!-- VIP Profile Avatar with Passport Watermark Overlay -->
                 <div class="relative mb-6 flex justify-center group">
                     <div class="absolute -inset-1 bg-emerald-500/30 rounded-full blur animate-pulse"></div>
                     <div class="relative w-28 h-28 rounded-full p-1 bg-black border-2 border-emerald-500 overflow-hidden shadow-[0_0_15px_rgba(0,255,102,0.4)]">
                         <img id="profile-avatar" src="img/profile.jpg" alt="Profile" onerror="this.onerror=null; this.src='img/profile.png';">
+                        
+                        <!-- Passport Hologram Watermark Layer -->
+                        <div class="absolute inset-0 passport-watermark watermark-pattern pointer-events-none flex flex-col items-center justify-center opacity-75 mix-blend-screen">
+                            <div class="border border-emerald-400/50 rounded-full px-1 py-0.5 transform -rotate-12">
+                                <span class="text-[7px] font-bold font-mono tracking-widest text-emerald-300 text-glow">VERIFIED VIP</span>
+                            </div>
+                            <span class="text-[6px] font-mono text-emerald-400/90 tracking-tighter mt-0.5">SECURE_ID#99</span>
+                        </div>
                     </div>
                 </div>
                 
@@ -119,8 +136,8 @@
                     </div>
 
                     <div class="flex items-center gap-3 bg-emerald-950/20 p-2.5 rounded border border-emerald-500/20">
-                        <div id="qrcode-container" class="w-14 h-14 bg-black p-1 rounded shrink-0 flex items-center justify-center border border-emerald-500/40">
-                            <img id="qr-img" src="" alt="QR Code" class="w-full h-full object-contain filter invert hue-rotate-90">
+                        <div id="qrcode-container" class="w-16 h-16 bg-white p-1 rounded shrink-0 flex items-center justify-center border border-emerald-500/40">
+                            <img id="qr-img" src="" alt="QR Code" class="w-full h-full object-contain">
                         </div>
                         <div class="overflow-hidden">
                             <p class="text-[9px] font-mono text-emerald-500 uppercase tracking-wider" id="crypto-label"></p>
@@ -218,7 +235,6 @@
 
     </div>
 
-    <!-- Inline Unified Script & Config (Bypasses CORS / file:// loading restrictions) -->
     <script>
         const SITE_CONFIG = {
             profile: {
@@ -232,32 +248,32 @@
                 USDT_TRC20: {
                     label: "USDT (TRC20):",
                     address: "TX1z9ShawoN772TRC20SecureVaultX99",
-                    qr: "https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=TX1z9ShawoN772TRC20SecureVaultX99"
+                    qr: "https://chart.googleapis.com/chart?chs=150x150&cht=qr&chl=TX1z9ShawoN772TRC20SecureVaultX99&choe=UTF-8"
                 },
                 USDT_ERC20: {
                     label: "USDT (ERC20):",
                     address: "0xShawonSecureVaultERC2099999999",
-                    qr: "https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=0xShawonSecureVaultERC2099999999"
+                    qr: "https://chart.googleapis.com/chart?chs=150x150&cht=qr&chl=0xShawonSecureVaultERC2099999999&choe=UTF-8"
                 },
                 USDT_BEP20: {
                     label: "USDT (BEP20):",
                     address: "0xShawonSecureVaultBEP2088888888",
-                    qr: "https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=0xShawonSecureVaultBEP2088888888"
+                    qr: "https://chart.googleapis.com/chart?chs=150x150&cht=qr&chl=0xShawonSecureVaultBEP2088888888&choe=UTF-8"
                 },
                 USDC_ERC20: {
                     label: "USDC (ERC20):",
                     address: "0xShawonSecureVaultUSDC11111111",
-                    qr: "https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=0xShawonSecureVaultUSDC11111111"
+                    qr: "https://chart.googleapis.com/chart?chs=150x150&cht=qr&chl=0xShawonSecureVaultUSDC11111111&choe=UTF-8"
                 },
                 USDC_SOL: {
                     label: "USDC (Solana):",
                     address: "ShawonSolanaSecureVault9999Sol",
-                    qr: "https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=ShawonSolanaSecureVault9999Sol"
+                    qr: "https://chart.googleapis.com/chart?chs=150x150&cht=qr&chl=ShawonSolanaSecureVault9999Sol&choe=UTF-8"
                 },
                 USDC_POLYGON: {
                     label: "USDC (Polygon):",
                     address: "0xShawonPolygonVault7777777777",
-                    qr: "https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=0xShawonPolygonVault7777777777"
+                    qr: "https://chart.googleapis.com/chart?chs=150x150&cht=qr&chl=0xShawonPolygonVault7777777777&choe=UTF-8"
                 }
             },
             tradingNodes: {
@@ -303,10 +319,7 @@
         });
 
         function initApp() {
-            if (!SITE_CONFIG) {
-                console.error("SITE_CONFIG failed to load.");
-                return;
-            }
+            if (!SITE_CONFIG) return;
 
             const nameElems = [document.getElementById('profile-name'), document.getElementById('profile-name-main')];
             nameElems.forEach(el => { if (el) el.innerText = SITE_CONFIG.profile.name; });
