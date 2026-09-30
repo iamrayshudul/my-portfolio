@@ -8,6 +8,10 @@ window.addEventListener('DOMContentLoaded', () => {
     document.getElementById('email-link').href = `mailto:${SITE_CONFIG.profile.email}?subject=Secure%20Inquiry`;
     document.getElementById('email-text').innerText = SITE_CONFIG.profile.email;
 
+    // Initialize Default Dropdowns from Config
+    updateCryptoPayment();
+    updateInvestorPlatform();
+
     // Footer Year & Clock
     const currentYear = new Date().getFullYear();
     document.getElementById('footer-copyright').innerText = `© ${currentYear} ${SITE_CONFIG.profile.name}`;
@@ -68,6 +72,7 @@ function initMatrixCanvas() {
 // Crypto Payment Switcher
 function updateCryptoPayment() {
     const select = document.getElementById('crypto-selector');
+    if (!select) return;
     const selectedVal = select.value;
     const data = SITE_CONFIG.cryptoWallets[selectedVal];
 
@@ -84,7 +89,9 @@ function copyAddress() {
 
 // Trading Platforms Switcher
 function updateInvestorPlatform() {
-    const sel = document.getElementById('platform-selector').value;
+    const selElem = document.getElementById('platform-selector');
+    if (!selElem) return;
+    const sel = selElem.value;
     const data = SITE_CONFIG.tradingNodes[sel];
     document.getElementById('inv-platform').innerText = data.platform;
     document.getElementById('inv-server').innerText = data.server;
@@ -110,3 +117,4 @@ function toggleInvestorCredentials() {
         toggleText.innerText = "DECRYPT";
     }
 }
+```[cite: 2]
