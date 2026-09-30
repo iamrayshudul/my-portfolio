@@ -1,32 +1,43 @@
-document.addEventListener('DOMContentLoaded', () => {
-    if (typeof SITE_CONFIG !== 'undefined') {
-        document.getElementById('profile-name').innerText = SITE_CONFIG.profile.name;
-        document.getElementById('profile-title').innerText = SITE_CONFIG.profile.title;
-        document.getElementById('profile-name-main').innerText = SITE_CONFIG.profile.name;
-        document.getElementById('profile-title-main').innerText = SITE_CONFIG.profile.title;
-        document.getElementById('profile-bio').innerText = SITE_CONFIG.profile.bio;
-        
-        const linkedinLink = document.getElementById('linkedin-link');
-        if (linkedinLink) linkedinLink.href = SITE_CONFIG.profile.linkedin;
-        
-        const emailLink = document.getElementById('email-link');
-        if (emailLink) emailLink.href = 'mailto:' + SITE_CONFIG.profile.email;
-        
-        const emailText = document.getElementById('email-text');
-        if (emailText) emailText.innerText = SITE_CONFIG.profile.email;
-        
-        const footerCopyright = document.getElementById('footer-copyright');
-        if (footerCopyright) footerCopyright.innerText = `© 2026 ${SITE_CONFIG.profile.name}`;
-    }
-
+window.addEventListener('DOMContentLoaded', () => {
+    loadSiteConfig();
+    
     setInterval(() => {
         const now = new Date();
         const clockElem = document.getElementById('live-clock');
-        if (clockElem) clockElem.innerText = now.toLocaleTimeString();
+        if (clockElem && now.toLocaleTimeString) {
+            clockElem.innerText = now.toLocaleTimeString();
+        }
     }, 1000);
 
     initMatrixCanvas();
 });
+
+function loadSiteConfig() {
+    if (typeof SITE_CONFIG !== 'undefined') {
+        const nameElems = [document.getElementById('profile-name'), document.getElementById('profile-name-main')];
+        nameElems.forEach(el => { if (el) el.innerText = SITE_CONFIG.profile.name; });
+
+        const titleElems = [document.getElementById('profile-title'), document.getElementById('profile-title-main')];
+        titleElems.forEach(el => { if (el) el.innerText = SITE_CONFIG.profile.title; });
+
+        const bioElem = document.getElementById('profile-bio');
+        if (bioElem) bioElem.innerText = SITE_CONFIG.profile.bio;
+
+        const linkedinLink = document.getElementById('linkedin-link');
+        if (linkedinLink) linkedinLink.href = SITE_CONFIG.profile.linkedin;
+
+        const emailLink = document.getElementById('email-link');
+        if (emailLink) emailLink.href = 'mailto:' + SITE_CONFIG.profile.email;
+
+        const emailText = document.getElementById('email-text');
+        if (emailText) emailText.innerText = SITE_CONFIG.profile.email;
+
+        const footerCopyright = document.getElementById('footer-copyright');
+        if (footerCopyright) footerCopyright.innerText = `© 2026 ${SITE_CONFIG.profile.name}`;
+    } else {
+        setTimeout(loadSiteConfig, 50);
+    }
+}
 
 function initMatrixCanvas() {
     const canvas = document.getElementById('matrix-canvas');
@@ -50,7 +61,7 @@ function initMatrixCanvas() {
     }
 
     function draw() {
-        ctx.fillStyle = 'rgba(2, 11, 5, 0.12)';
+        ctx.fillStyle = 'rgba(2, 11, 5, 0.15)';
         ctx.fillRect(0, 0, width, height);
         ctx.fillStyle = '#00ff66';
         ctx.font = fontSize + 'px monospace';
@@ -115,7 +126,7 @@ function toggleInvestorCredentials() {
 
 function toggleTheme() {
     const body = document.body;
-    if(body.style.backgroundColor === 'rgb(2, 11, 5)') {
+    if(body.style.backgroundColor === 'rgb(2, 11, 5)' || body.style.backgroundColor === '') {
         body.style.backgroundColor = '#111827';
     } else {
         body.style.backgroundColor = '#020b05';
