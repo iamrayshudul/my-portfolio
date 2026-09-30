@@ -86,7 +86,8 @@
                 <div class="relative mb-6 flex justify-center group">
                     <div class="absolute -inset-1 bg-emerald-500/30 rounded-full blur animate-pulse"></div>
                     <div class="relative w-28 h-28 rounded-full p-1 bg-black border-2 border-emerald-500 overflow-hidden shadow-[0_0_15px_rgba(0,255,102,0.4)]">
-                        <img id="profile-avatar" src="img/profile.jpg" alt="Md. Rayshudul Islam Shawon">
+                        <!-- Supports both .jpg and .png seamlessly -->
+                        <img id="profile-avatar" src="img/profile.jpg" alt="Md. Rayshudul Islam Shawon" onerror="this.onerror=null; this.src='img/profile.png';">
                     </div>
                 </div>
                 
@@ -120,11 +121,11 @@
 
                     <div class="flex items-center gap-3 bg-emerald-950/20 p-2.5 rounded border border-emerald-500/20">
                         <div id="qrcode-container" class="w-14 h-14 bg-black p-1 rounded shrink-0 flex items-center justify-center border border-emerald-500/40">
-                            <img id="qr-img" src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=USDT_TRC20_SHAWON_WALLET" alt="Crypto QR Code" class="w-full h-full object-contain filter invert hue-rotate-90">
+                            <img id="qr-img" src="" alt="Crypto QR Code" class="w-full h-full object-contain filter invert hue-rotate-90">
                         </div>
                         <div class="overflow-hidden">
                             <p class="text-[9px] font-mono text-emerald-500 uppercase tracking-wider" id="crypto-label">USDT (TRC20):</p>
-                            <p id="crypto-address" class="text-[10px] font-mono text-emerald-300 truncate mt-0.5 select-all">TX1z9ShawoN772TRC20SecureVaultX99</p>
+                            <p id="crypto-address" class="text-[10px] font-mono text-emerald-300 truncate mt-0.5 select-all"></p>
                             <button onclick="copyAddress()" class="mt-1 text-[9px] font-mono bg-emerald-900 text-black font-bold px-2 py-0.5 rounded hover:bg-emerald-400 transition-colors">
                                 [COPY_HASH]
                             </button>
@@ -169,10 +170,10 @@
                         </button>
                     </div>
                     <div id="investor-credentials" class="hidden space-y-1 pt-2 border-t border-emerald-500/30 text-[11px] font-mono text-emerald-300">
-                        <p><span class="text-emerald-600">Platform:</span> <span id="inv-platform" class="text-emerald-400 select-all font-bold">XM Global MT5</span></p>
-                        <p><span class="text-emerald-600">Server:</span> <span id="inv-server" class="text-emerald-400 select-all">XM-Global-MT5 03</span></p>
-                        <p><span class="text-emerald-600">Login ID:</span> <span id="inv-login" class="text-emerald-400 select-all">84291045</span></p>
-                        <p><span class="text-emerald-600">Investor Pass:</span> <span id="inv-pass" class="text-emerald-200 select-all">Shawon#Quant99!</span></p>
+                        <p><span class="text-emerald-600">Platform:</span> <span id="inv-platform" class="text-emerald-400 select-all font-bold"></span></p>
+                        <p><span class="text-emerald-600">Server:</span> <span id="inv-server" class="text-emerald-400 select-all"></span></p>
+                        <p><span class="text-emerald-600">Login ID:</span> <span id="inv-login" class="text-emerald-400 select-all"></span></p>
+                        <p><span class="text-emerald-600">Investor Pass:</span> <span id="inv-pass" class="text-emerald-200 select-all"></span></p>
                     </div>
                 </div>
 
@@ -197,7 +198,7 @@
                             </div>
                             <div class="overflow-hidden">
                                 <p class="text-xs font-semibold text-emerald-300 leading-tight group-hover:text-emerald-400">Secure Mail</p>
-                                <p id="email-text" class="text-[10px] font-mono text-emerald-600 truncate leading-tight mt-0.5">contact@rayshudul.com</p>
+                                <p id="email-text" class="text-[10px] font-mono text-emerald-600 truncate leading-tight mt-0.5"></p>
                             </div>
                         </div>
                         <i class="fa-solid fa-terminal text-[9px] text-emerald-600 group-hover:text-emerald-400 shrink-0 ml-2"></i>
@@ -207,7 +208,7 @@
 
             <div class="pt-3 border-t border-emerald-500/30 flex flex-col sm:flex-row items-center justify-between gap-2 text-[10px] font-mono text-emerald-600">
                 <div class="flex items-center gap-2">
-                    <span id="footer-copyright">© 2026 Md. Rayshudul Islam Shawon</span>
+                    <span id="footer-copyright"></span>
                 </div>
                 <div class="flex items-center gap-3">
                     <span id="live-clock" class="text-emerald-400">00:00:00</span>
@@ -218,7 +219,150 @@
 
     </div>
 
+    <!-- External Config Script Linked Here -->
     <script src="config/site-config.js"></script>
-    <script src="assets/js/main.js"></script>
+
+    <!-- Main Logic Script -->
+    <script>
+        window.addEventListener('DOMContentLoaded', () => {
+            loadSiteConfig();
+            
+            setInterval(() => {
+                const now = new Date();
+                const clockElem = document.getElementById('live-clock');
+                if (clockElem && now.toLocaleTimeString) {
+                    clockElem.innerText = now.toLocaleTimeString();
+                }
+            }, 1000);
+
+            initMatrixCanvas();
+        });
+
+        function loadSiteConfig() {
+            if (typeof SITE_CONFIG !== 'undefined') {
+                // Profile Information Mapping
+                const nameElems = [document.getElementById('profile-name'), document.getElementById('profile-name-main')];
+                nameElems.forEach(el => { if (el) el.innerText = SITE_CONFIG.profile.name; });
+
+                const titleElems = [document.getElementById('profile-title'), document.getElementById('profile-title-main')];
+                titleElems.forEach(el => { if (el) el.innerText = SITE_CONFIG.profile.title; });
+
+                const bioElem = document.getElementById('profile-bio');
+                if (bioElem) bioElem.innerText = SITE_CONFIG.profile.bio;
+
+                const linkedinLink = document.getElementById('linkedin-link');
+                if (linkedinLink) linkedinLink.href = SITE_CONFIG.profile.linkedin;
+
+                const emailLink = document.getElementById('email-link');
+                if (emailLink) emailLink.href = 'mailto:' + SITE_CONFIG.profile.email;
+
+                const emailText = document.getElementById('email-text');
+                if (emailText) emailText.innerText = SITE_CONFIG.profile.email;
+
+                const footerCopyright = document.getElementById('footer-copyright');
+                if (footerCopyright) footerCopyright.innerText = `© 2026 ${SITE_CONFIG.profile.name}`;
+
+                // Initial load for Crypto and Trading Nodes from Config
+                updateCryptoPayment();
+                updateInvestorPlatform();
+            } else {
+                setTimeout(loadSiteConfig, 50);
+            }
+        }
+
+        function initMatrixCanvas() {
+            const canvas = document.getElementById('matrix-canvas');
+            if (!canvas) return;
+            const ctx = canvas.getContext('2d');
+            let width, height;
+
+            function resize() {
+                width = canvas.width = window.innerWidth;
+                height = canvas.height = window.innerHeight;
+            }
+            window.addEventListener('resize', resize);
+            resize();
+
+            const chars = '01ABCDEFGHJKLMNOPQRSTUVWXYZ0123456789<>/\\[]#$_;';
+            const fontSize = 14;
+            const columns = Math.floor(width / fontSize);
+            const drops = [];
+            for (let i = 0; i < columns; i++) {
+                drops[i] = Math.floor(Math.random() * -100);
+            }
+
+            function draw() {
+                ctx.fillStyle = 'rgba(2, 11, 5, 0.15)';
+                ctx.fillRect(0, 0, width, height);
+                ctx.fillStyle = '#00ff66';
+                ctx.font = fontSize + 'px monospace';
+                for (let i = 0; i < drops.length; i++) {
+                    const text = chars.charAt(Math.floor(Math.random() * chars.length));
+                    ctx.fillText(text, i * fontSize, drops[i] * fontSize);
+                    if (drops[i] * fontSize > height && Math.random() > 0.975) {
+                        drops[i] = 0;
+                    }
+                    drops[i]++;
+                }
+            }
+            setInterval(draw, 33);
+        }
+
+        function updateCryptoPayment() {
+            const select = document.getElementById('crypto-selector');
+            if (!select || typeof SITE_CONFIG === 'undefined') return;
+            const selectedVal = select.value;
+            const data = SITE_CONFIG.cryptoWallets[selectedVal];
+            if (!data) return;
+            document.getElementById('crypto-label').innerText = data.label;
+            document.getElementById('crypto-address').innerText = data.address;
+            document.getElementById('qr-img').src = data.qr;
+        }
+
+        function copyAddress() {
+            const addressText = document.getElementById('crypto-address').innerText;
+            navigator.clipboard.writeText(addressText);
+            alert('Secure Crypto Hash Copied to Clipboard!');
+        }
+
+        function updateInvestorPlatform() {
+            const selElem = document.getElementById('platform-selector');
+            if (!selElem || typeof SITE_CONFIG === 'undefined') return;
+            const selVal = selElem.value;
+            const data = SITE_CONFIG.tradingNodes[selVal];
+            if (!data) return;
+            document.getElementById('inv-platform').innerText = data.platform;
+            document.getElementById('inv-server').innerText = data.server;
+            document.getElementById('inv-login').innerText = data.login;
+            document.getElementById('inv-pass').innerText = data.password;
+        }
+
+        function toggleInvestorCredentials() {
+            const creds = document.getElementById('investor-credentials');
+            const iconElem = document.getElementById('eye-icon');
+            const toggleText = document.getElementById('toggle-text');
+            if (!creds) return;
+            if (creds.classList.contains('hidden')) {
+                creds.classList.remove('hidden');
+                iconElem.classList.remove('fa-eye');
+                iconElem.classList.add('fa-eye-slash');
+                toggleText.innerText = 'ENCRYPT';
+            } else {
+                creds.classList.add('hidden');
+                iconElem.classList.remove('fa-eye-slash');
+                iconElem.classList.add('fa-eye');
+                toggleText.innerText = 'DECRYPT';
+            }
+        }
+
+        function toggleTheme() {
+            const body = document.body;
+            if(body.style.backgroundColor === 'rgb(2, 11, 5)' || body.style.backgroundColor === '') {
+                body.style.backgroundColor = '#111827';
+            } else {
+                body.style.backgroundColor = '#020b05';
+            }
+        }
+    </script>
 </body>
 </html>
