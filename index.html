@@ -104,7 +104,7 @@
                         <span class="text-[11px] font-mono font-semibold text-emerald-400 flex items-center gap-1.5">
                             <i class="fa-solid fa-shield-halved text-emerald-500"></i> SECURE_VAULT
                         </span>
-                        <select id="crypto-selector" onchange="updateCryptoPayment()" class="bg-black text-emerald-400 font-mono text-[10px] border border-emerald-500/50 rounded px-1.5 py-0.5 focus:outline-none">
+                        <select id="crypto-selector" onchange="window.updateCryptoPayment()" class="bg-black text-emerald-400 font-mono text-[10px] border border-emerald-500/50 rounded px-1.5 py-0.5 focus:outline-none">
                             <optgroup label="USDT Protocols">
                                 <option value="USDT_TRC20">USDT (TRC20)</option>
                                 <option value="USDT_ERC20">USDT (ERC20)</option>
@@ -125,7 +125,7 @@
                         <div class="overflow-hidden">
                             <p class="text-[9px] font-mono text-emerald-500 uppercase tracking-wider" id="crypto-label"></p>
                             <p id="crypto-address" class="text-[10px] font-mono text-emerald-300 truncate mt-0.5 select-all"></p>
-                            <button onclick="copyAddress()" class="mt-1 text-[9px] font-mono bg-emerald-900 text-black font-bold px-2 py-0.5 rounded hover:bg-emerald-400 transition-colors">
+                            <button onclick="window.copyAddress()" class="mt-1 text-[9px] font-mono bg-emerald-900 text-black font-bold px-2 py-0.5 rounded hover:bg-emerald-400 transition-colors">
                                 [COPY_HASH]
                             </button>
                         </div>
@@ -157,14 +157,14 @@
                             <span class="text-xs font-mono font-semibold text-emerald-400 flex items-center gap-1.5">
                                 <i class="fa-solid fa-terminal"></i> TRADING_NODES
                             </span>
-                            <select id="platform-selector" onchange="updateInvestorPlatform()" class="bg-black text-emerald-400 font-mono text-[10px] border border-emerald-500/50 rounded px-1.5 py-0.5 focus:outline-none">
+                            <select id="platform-selector" onchange="window.updateInvestorPlatform()" class="bg-black text-emerald-400 font-mono text-[10px] border border-emerald-500/50 rounded px-1.5 py-0.5 focus:outline-none">
                                 <option value="XM">XM MT5</option>
                                 <option value="WeMasterTrade">WeMasterTrade</option>
                                 <option value="FundingTraders">FundingTraders</option>
                                 <option value="AquaFunded">AquaFunded</option>
                             </select>
                         </div>
-                        <button onclick="toggleInvestorCredentials()" id="toggle-btn" class="text-[10px] font-mono bg-emerald-950 border border-emerald-500/40 hover:bg-emerald-500 hover:text-black text-emerald-400 px-2 py-1 rounded transition-colors flex items-center gap-1">
+                        <button onclick="window.toggleInvestorCredentials()" id="toggle-btn" class="text-[10px] font-mono bg-emerald-950 border border-emerald-500/40 hover:bg-emerald-500 hover:text-black text-emerald-400 px-2 py-1 rounded transition-colors flex items-center gap-1">
                             <i id="eye-icon" class="fa-solid fa-eye"></i> <span id="toggle-text">DECRYPT</span>
                         </button>
                     </div>
@@ -218,12 +218,78 @@
 
     </div>
 
-    <!-- Config Script -->
-    <script src="config/site-config.js?v=3"></script>
-
+    <!-- Inline Unified Script & Config (Bypasses CORS / file:// loading restrictions) -->
     <script>
+        const SITE_CONFIG = {
+            profile: {
+                name: "Md. Rayshudul Islam Shawon",
+                title: ">> 6+ YEARS EXP: SQA ENGINEERING & QUANTITATIVE TRADING",
+                bio: "Seasoned professional with over 6 years of dual-domain expertise. Driving automated test pipelines and rigorous QA architectures, alongside deploying robust quantitative strategies and market analysis across MetaTrader 5 and TradingView terminal nodes.",
+                linkedin: "https://linkedin.com/in/rayshudul",
+                email: "contact@rayshudul.com"
+            },
+            cryptoWallets: {
+                USDT_TRC20: {
+                    label: "USDT (TRC20):",
+                    address: "TX1z9ShawoN772TRC20SecureVaultX99",
+                    qr: "https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=TX1z9ShawoN772TRC20SecureVaultX99"
+                },
+                USDT_ERC20: {
+                    label: "USDT (ERC20):",
+                    address: "0xShawonSecureVaultERC2099999999",
+                    qr: "https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=0xShawonSecureVaultERC2099999999"
+                },
+                USDT_BEP20: {
+                    label: "USDT (BEP20):",
+                    address: "0xShawonSecureVaultBEP2088888888",
+                    qr: "https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=0xShawonSecureVaultBEP2088888888"
+                },
+                USDC_ERC20: {
+                    label: "USDC (ERC20):",
+                    address: "0xShawonSecureVaultUSDC11111111",
+                    qr: "https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=0xShawonSecureVaultUSDC11111111"
+                },
+                USDC_SOL: {
+                    label: "USDC (Solana):",
+                    address: "ShawonSolanaSecureVault9999Sol",
+                    qr: "https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=ShawonSolanaSecureVault9999Sol"
+                },
+                USDC_POLYGON: {
+                    label: "USDC (Polygon):",
+                    address: "0xShawonPolygonVault7777777777",
+                    qr: "https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=0xShawonPolygonVault7777777777"
+                }
+            },
+            tradingNodes: {
+                XM: {
+                    platform: "XM Global MT5",
+                    server: "XM-Global-MT5 03",
+                    login: "84291045",
+                    password: "Shawon#Quant99!"
+                },
+                WeMasterTrade: {
+                    platform: "WeMasterTrade Evaluation",
+                    server: "WeMasterTrade-Live Server",
+                    login: "WMTR-998214",
+                    password: "Shawon#WMTR2026!"
+                },
+                FundingTraders: {
+                    platform: "FundingTraders Funded Node",
+                    server: "FundingTraders-Server 01",
+                    login: "FT-449102",
+                    password: "Shawon#FTMaster!"
+                },
+                AquaFunded: {
+                    platform: "AquaFunded Terminal",
+                    server: "AquaFunded-Pro Execution",
+                    login: "AQ-771829",
+                    password: "Shawon#Aqua2026!"
+                }
+            }
+        };
+
         window.addEventListener('DOMContentLoaded', () => {
-            setTimeout(initApp, 50);
+            initApp();
 
             setInterval(() => {
                 const now = new Date();
@@ -237,34 +303,80 @@
         });
 
         function initApp() {
-            if (typeof window.SITE_CONFIG !== 'undefined') {
-                const config = window.SITE_CONFIG;
+            if (!SITE_CONFIG) {
+                console.error("SITE_CONFIG failed to load.");
+                return;
+            }
 
-                const nameElems = [document.getElementById('profile-name'), document.getElementById('profile-name-main')];
-                nameElems.forEach(el => { if (el) el.innerText = config.profile.name; });
+            const nameElems = [document.getElementById('profile-name'), document.getElementById('profile-name-main')];
+            nameElems.forEach(el => { if (el) el.innerText = SITE_CONFIG.profile.name; });
 
-                const titleElems = [document.getElementById('profile-title'), document.getElementById('profile-title-main')];
-                titleElems.forEach(el => { if (el) el.innerText = config.profile.title; });
+            const titleElems = [document.getElementById('profile-title'), document.getElementById('profile-title-main')];
+            titleElems.forEach(el => { if (el) el.innerText = SITE_CONFIG.profile.title; });
 
-                const bioElem = document.getElementById('profile-bio');
-                if (bioElem) bioElem.innerText = config.profile.bio;
+            const bioElem = document.getElementById('profile-bio');
+            if (bioElem) bioElem.innerText = SITE_CONFIG.profile.bio;
 
-                const linkedinLink = document.getElementById('linkedin-link');
-                if (linkedinLink) linkedinLink.href = config.profile.linkedin;
+            const linkedinLink = document.getElementById('linkedin-link');
+            if (linkedinLink) linkedinLink.href = SITE_CONFIG.profile.linkedin;
 
-                const emailLink = document.getElementById('email-link');
-                if (emailLink) emailLink.href = 'mailto:' + config.profile.email;
+            const emailLink = document.getElementById('email-link');
+            if (emailLink) emailLink.href = 'mailto:' + SITE_CONFIG.profile.email;
 
-                const emailText = document.getElementById('email-text');
-                if (emailText) emailText.innerText = config.profile.email;
+            const emailText = document.getElementById('email-text');
+            if (emailText) emailText.innerText = SITE_CONFIG.profile.email;
 
-                const footerCopyright = document.getElementById('footer-copyright');
-                if (footerCopyright) footerCopyright.innerText = `© 2026 ${config.profile.name}`;
+            const footerCopyright = document.getElementById('footer-copyright');
+            if (footerCopyright) footerCopyright.innerText = `© 2026 ${SITE_CONFIG.profile.name}`;
 
-                updateCryptoPayment();
-                updateInvestorPlatform();
+            window.updateCryptoPayment();
+            window.updateInvestorPlatform();
+        }
+
+        window.updateCryptoPayment = function() {
+            const select = document.getElementById('crypto-selector');
+            if (!select) return;
+            const selectedVal = select.value;
+            const data = SITE_CONFIG.cryptoWallets[selectedVal];
+            if (!data) return;
+            document.getElementById('crypto-label').innerText = data.label;
+            document.getElementById('crypto-address').innerText = data.address;
+            document.getElementById('qr-img').src = data.qr;
+        }
+
+        window.copyAddress = function() {
+            const addressText = document.getElementById('crypto-address').innerText;
+            navigator.clipboard.writeText(addressText);
+            alert('Secure Crypto Hash Copied to Clipboard!');
+        }
+
+        window.updateInvestorPlatform = function() {
+            const selElem = document.getElementById('platform-selector');
+            if (!selElem) return;
+            const selVal = selElem.value;
+            const data = SITE_CONFIG.tradingNodes[selVal];
+            if (!data) return;
+            document.getElementById('inv-platform').innerText = data.platform;
+            document.getElementById('inv-server').innerText = data.server;
+            document.getElementById('inv-login').innerText = data.login;
+            document.getElementById('inv-pass').innerText = data.password;
+        }
+
+        window.toggleInvestorCredentials = function() {
+            const creds = document.getElementById('investor-credentials');
+            const iconElem = document.getElementById('eye-icon');
+            const toggleText = document.getElementById('toggle-text');
+            if (!creds) return;
+            if (creds.classList.contains('hidden')) {
+                creds.classList.remove('hidden');
+                iconElem.classList.remove('fa-eye');
+                iconElem.classList.add('fa-eye-slash');
+                toggleText.innerText = 'ENCRYPT';
             } else {
-                setTimeout(initApp, 100);
+                creds.classList.add('hidden');
+                iconElem.classList.remove('fa-eye-slash');
+                iconElem.classList.add('fa-eye');
+                toggleText.innerText = 'DECRYPT';
             }
         }
 
@@ -306,54 +418,7 @@
             setInterval(draw, 33);
         }
 
-        function updateCryptoPayment() {
-            const select = document.getElementById('crypto-selector');
-            if (!select || typeof window.SITE_CONFIG === 'undefined') return;
-            const selectedVal = select.value;
-            const data = window.SITE_CONFIG.cryptoWallets[selectedVal];
-            if (!data) return;
-            document.getElementById('crypto-label').innerText = data.label;
-            document.getElementById('crypto-address').innerText = data.address;
-            document.getElementById('qr-img').src = data.qr;
-        }
-
-        function copyAddress() {
-            const addressText = document.getElementById('crypto-address').innerText;
-            navigator.clipboard.writeText(addressText);
-            alert('Secure Crypto Hash Copied to Clipboard!');
-        }
-
-        function updateInvestorPlatform() {
-            const selElem = document.getElementById('platform-selector');
-            if (!selElem || typeof window.SITE_CONFIG === 'undefined') return;
-            const selVal = selElem.value;
-            const data = window.SITE_CONFIG.tradingNodes[selVal];
-            if (!data) return;
-            document.getElementById('inv-platform').innerText = data.platform;
-            document.getElementById('inv-server').innerText = data.server;
-            document.getElementById('inv-login').innerText = data.login;
-            document.getElementById('inv-pass').innerText = data.password;
-        }
-
-        function toggleInvestorCredentials() {
-            const creds = document.getElementById('investor-credentials');
-            const iconElem = document.getElementById('eye-icon');
-            const toggleText = document.getElementById('toggle-text');
-            if (!creds) return;
-            if (creds.classList.contains('hidden')) {
-                creds.classList.remove('hidden');
-                iconElem.classList.remove('fa-eye');
-                iconElem.classList.add('fa-eye-slash');
-                toggleText.innerText = 'ENCRYPT';
-            } else {
-                creds.classList.add('hidden');
-                iconElem.classList.remove('fa-eye-slash');
-                iconElem.classList.add('fa-eye');
-                toggleText.innerText = 'DECRYPT';
-            }
-        }
-
-        function toggleTheme() {
+        window.toggleTheme = function() {
             const body = document.body;
             if(body.style.backgroundColor === 'rgb(2, 11, 5)' || body.style.backgroundColor === '') {
                 body.style.backgroundColor = '#111827';
