@@ -6,8 +6,6 @@
     <title>Md. Rayshudul Islam Shawon | SQA Engineer & Forex Trader</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <!-- QR Code Generator Library -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
     <script>
         tailwind.config = {
             darkMode: 'class',
@@ -71,11 +69,6 @@
         }
         .watermark-pattern {
             background-image: repeating-linear-gradient(45deg, rgba(0, 255, 102, 0.08) 0, rgba(0, 255, 102, 0.08) 2px, transparent 0, transparent 8px);
-        }
-        #qrcode-container img {
-            width: 100% !important;
-            height: 100% !important;
-            object-fit: contain;
         }
     </style>
 </head>
@@ -143,7 +136,9 @@
                     </div>
 
                     <div class="flex items-center gap-3 bg-emerald-950/20 p-2.5 rounded border border-emerald-500/20">
-                        <div id="qrcode-container" class="w-16 h-16 bg-white p-1 rounded shrink-0 flex items-center justify-center border border-emerald-500/40 overflow-hidden"></div>
+                        <div id="qrcode-container" class="w-16 h-16 bg-white p-1 rounded shrink-0 flex items-center justify-center border border-emerald-500/40 overflow-hidden">
+                            <img id="qr-img" src="" alt="QR Code" class="w-full h-full object-contain">
+                        </div>
                         <div class="overflow-hidden">
                             <p class="text-[9px] font-mono text-emerald-500 uppercase tracking-wider" id="crypto-label"></p>
                             <p id="crypto-address" class="text-[10px] font-mono text-emerald-300 truncate mt-0.5 select-all"></p>
@@ -252,27 +247,33 @@
             cryptoWallets: {
                 USDT_TRC20: {
                     label: "USDT (TRC20):",
-                    address: "TX1z9ShawoN772TRC20SecureVaultX99"
+                    address: "TX1z9ShawoN772TRC20SecureVaultX99",
+                    qr: "https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=TX1z9ShawoN772TRC20SecureVaultX99"
                 },
                 USDT_ERC20: {
                     label: "USDT (ERC20):",
-                    address: "0xShawonSecureVaultERC2099999999"
+                    address: "0xShawonSecureVaultERC2099999999",
+                    qr: "https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=0xShawonSecureVaultERC2099999999"
                 },
                 USDT_BEP20: {
                     label: "USDT (BEP20):",
-                    address: "0xShawonSecureVaultBEP2088888888"
+                    address: "0xShawonSecureVaultBEP2088888888",
+                    qr: "https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=0xShawonSecureVaultBEP2088888888"
                 },
                 USDC_ERC20: {
                     label: "USDC (ERC20):",
-                    address: "0xShawonSecureVaultUSDC11111111"
+                    address: "0xShawonSecureVaultUSDC11111111",
+                    qr: "https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=0xShawonSecureVaultUSDC11111111"
                 },
                 USDC_SOL: {
                     label: "USDC (Solana):",
-                    address: "ShawonSolanaSecureVault9999Sol"
+                    address: "ShawonSolanaSecureVault9999Sol",
+                    qr: "https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=ShawonSolanaSecureVault9999Sol"
                 },
                 USDC_POLYGON: {
                     label: "USDC (Polygon):",
-                    address: "0xShawonPolygonVault7777777777"
+                    address: "0xShawonPolygonVault7777777777",
+                    qr: "https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=0xShawonPolygonVault7777777777"
                 }
             },
             tradingNodes: {
@@ -333,7 +334,7 @@
             if (linkedinLink) linkedinLink.href = SITE_CONFIG.profile.linkedin;
 
             const emailLink = document.getElementById('email-link');
-            if (emailLink) emailLink.href = 'mailto:' + SITE_CONFIG.profile.email;
+            if (emailLink) emailLink.href = 'mailto:' +SITE_CONFIG.profile.email;
 
             const emailText = document.getElementById('email-text');
             if (emailText) emailText.innerText = SITE_CONFIG.profile.email;
@@ -353,18 +354,7 @@
             if (!data) return;
             document.getElementById('crypto-label').innerText = data.label;
             document.getElementById('crypto-address').innerText = data.address;
-            
-            // Render QR Code smoothly using QRCodeJS library
-            const qrContainer = document.getElementById('qrcode-container');
-            qrContainer.innerHTML = "";
-            new QRCode(qrContainer, {
-                text: data.address,
-                width: 64,
-                height: 64,
-                colorDark: "#000000",
-                colorLight: "#ffffff",
-                correctLevel: QRCode.CorrectLevel.H
-            });
+            document.getElementById('qr-img').src = data.qr;
         }
 
         window.copyAddress = function() {
@@ -374,7 +364,7 @@
         }
 
         window.updateInvestorPlatform = function() {
-            const selElem = document.getElementById('platform-selector');
+            const selElem =.getElementById('platform-selector');
             if (!selElem) return;
             const selVal = selElem.value;
             const data = SITE_CONFIG.tradingNodes[selVal];
