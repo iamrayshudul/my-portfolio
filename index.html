@@ -1,165 +1,176 @@
-<!DOCTYPE html>
-<html lang="en" class="dark">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Md. Rayshudul Islam Shawon | SQA Engineer & Forex Trader</title>
-    <script src="[https://cdn.tailwindcss.com](https://cdn.tailwindcss.com)"></script>
-    <link rel="stylesheet" href="[https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css](https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css)">
-    <link rel="stylesheet" href="assets/css/style.css">
-</head>
-<body class="text-emerald-400 min-h-screen flex items-center justify-center p-4 sm:p-6 relative">
-
-    <canvas id="matrix-canvas"></canvas>
-    <div class="absolute inset-0 scanlines z-1 pointer-events-none"></div>
-
-    <div class="relative z-10 w-full max-w-4xl bg-black/90 cyber-border rounded-xl cyber-glow flex flex-col md:flex-row overflow-hidden backdrop-blur-md">
-        
-        <!-- Left Pane -->
-        <div class="w-full md:w-5/12 p-6 sm:p-8 flex flex-col justify-between border-b md:border-b-0 md:border-r border-emerald-500/30 bg-black/60">
-            <div>
-                <div class="flex items-center justify-between mb-6 pb-2 border-b border-emerald-500/30">
-                    <span class="text-xs font-mono text-emerald-500 flex items-center gap-2">
-                        <span class="inline-block w-2 h-2 bg-emerald-500 rounded-full animate-ping"></span> ROOT@SHAWON-SEC:~#
-                    </span>
-                </div>
-
-                <div class="relative mb-6 flex justify-center group">
-                    <div class="absolute -inset-1 bg-emerald-500/30 rounded-full blur animate-pulse"></div>
-                    <div class="relative w-28 h-28 rounded-full p-1 bg-black border-2 border-emerald-500 overflow-hidden shadow-[0_0_15px_rgba(0,255,102,0.4)]">
-                        <img id="profile-avatar" src="img/profile.jpg" alt="Profile" class="w-full h-full object-cover rounded-full filter grayscale contrast-150 brightness-90">
-                    </div>
-                </div>
-                
-                <h2 id="profile-name" class="text-sm font-bold text-emerald-300 text-center tracking-wider text-glow"></h2>
-                <p id="profile-title" class="text-emerald-500 font-mono text-[11px] text-center mt-1 mb-5"></p>
-
-                <div class="flex flex-wrap gap-1.5 justify-center mb-6">
-                    <span class="px-2 py-0.5 text-[10px] font-mono text-emerald-400 bg-emerald-950/60 border border-emerald-500/30 rounded">6+ YRS SQA</span>
-                    <span class="px-2 py-0.5 text-[10px] font-mono text-emerald-400 bg-emerald-950/60 border border-emerald-500/30 rounded">6+ YRS TRADING</span>
-                    <span class="px-2 py-0.5 text-[10px] font-mono text-emerald-400 bg-emerald-950/60 border border-emerald-500/30 rounded">MT5_ALGO</span>
-                </div>
-
-                <div class="bg-black/80 border border-emerald-500/40 rounded-lg p-3.5 shadow-[inset_0_0_10px_rgba(0,255,102,0.1)]">
-                    <div class="flex items-center justify-between mb-2">
-                        <span class="text-[11px] font-mono font-semibold text-emerald-400 flex items-center gap-1.5">
-                            <i class="fa-solid fa-shield-halved text-emerald-500"></i> SECURE_VAULT
-                        </span>
-                        <select id="crypto-selector" onchange="updateCryptoPayment()" class="bg-black text-emerald-400 font-mono text-[10px] border border-emerald-500/50 rounded px-1.5 py-0.5 focus:outline-none">
-                            <optgroup label="USDT Protocols">
-                                <option value="USDT_TRC20">USDT (TRC20)</option>
-                                <option value="USDT_ERC20">USDT (ERC20)</option>
-                                <option value="USDT_BEP20">USDT (BEP20)</option>
-                            </optgroup>
-                            <optgroup label="USDC Protocols">
-                                <option value="USDC_ERC20">USDC (ERC20)</option>
-                                <option value="USDC_SOL">USDC (Solana)</option>
-                                <option value="USDC_POLYGON">USDC (Polygon)</option>
-                            </optgroup>
-                        </select>
-                    </div>
-
-                    <div class="flex items-center gap-3 bg-emerald-950/20 p-2.5 rounded border border-emerald-500/20">
-                        <div id="qrcode-container" class="w-14 h-14 bg-black p-1 rounded shrink-0 flex items-center justify-center border border-emerald-500/40">
-                            <img id="qr-img" src="[https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=USDT_TRC20_SHAWON_WALLET](https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=USDT_TRC20_SHAWON_WALLET)" alt="QR" class="w-full h-full object-contain filter invert hue-rotate-90">
-                        </div>
-                        <div class="overflow-hidden">
-                            <p class="text-[9px] font-mono text-emerald-500 uppercase tracking-wider" id="crypto-label">USDT (TRC20):</p>
-                            <p id="crypto-address" class="text-[10px] font-mono text-emerald-300 truncate mt-0.5 select-all">TX1z9ShawoN772TRC20SecureVaultX99</p>
-                            <button onclick="copyAddress()" class="mt-1 text-[9px] font-mono bg-emerald-900 text-black font-bold px-2 py-0.5 rounded hover:bg-emerald-400 transition-colors">
-                                [COPY_HASH]
-                            </button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="w-full mt-6 pt-3 border-t border-emerald-500/20 text-center">
-                <p class="text-[9px] font-mono text-emerald-600">DUAL-CORE EXP: 6 YEARS EXCELLENCE</p>
-            </div>
-        </div>
-
-        <!-- Right Pane -->
-        <div class="w-full md:w-7/12 p-6 sm:p-8 flex flex-col justify-between bg-black/40">
-            <div>
-                <div class="mb-5">
-                    <div class="flex items-center gap-2 mb-1">
-                        <h1 class="text-xl font-bold text-emerald-300 tracking-wider text-glow">Md. Rayshudul Islam Shawon</h1>
-                        <span class="text-[10px] px-1.5 py-0.5 bg-emerald-950 text-emerald-400 border border-emerald-500/50 rounded">ACTIVE</span>
-                    </div>
-                    <p class="text-xs font-mono text-emerald-500">&gt;&gt; 6+ YEARS EXP: SQA ENGINEERING &amp; QUANTITATIVE TRADING</p>
-                </div>
-
-                <p id="profile-bio" class="text-xs text-emerald-300/90 leading-relaxed mb-6 font-mono border-l-2 border-emerald-500 pl-3"></p>
-
-                <div class="mb-6 bg-black/70 border border-emerald-500/40 rounded-lg p-3.5 shadow-inner">
-                    <div class="flex items-center justify-between mb-2">
-                        <div class="flex items-center gap-2">
-                            <span class="text-xs font-mono font-semibold text-emerald-400 flex items-center gap-1.5">
-                                <i class="fa-solid fa-terminal"></i> TRADING_NODES
-                            </span>
-                            <select id="platform-selector" onchange="updateInvestorPlatform()" class="bg-black text-emerald-400 font-mono text-[10px] border border-emerald-500/50 rounded px-1.5 py-0.5 focus:outline-none">
-                                <option value="XM">XM MT5</option>
-                                <option value="WeMasterTrade">WeMasterTrade</option>
-                                <option value="FundingTraders">FundingTraders</option>
-                                <option value="AquaFunded">AquaFunded</option>
-                            </select>
-                        </div>
-                        <button onclick="toggleInvestorCredentials()" id="toggle-btn" class="text-[10px] font-mono bg-emerald-950 border border-emerald-500/40 hover:bg-emerald-500 hover:text-black text-emerald-400 px-2 py-1 rounded transition-colors flex items-center gap-1">
-                            <i id="eye-icon" class="fa-solid fa-eye"></i> <span id="toggle-text">DECRYPT</span>
-                        </button>
-                    </div>
-                    <div id="investor-credentials" class="hidden space-y-1 pt-2 border-t border-emerald-500/30 text-[11px] font-mono text-emerald-300">
-                        <p><span class="text-emerald-600">Platform:</span> <span id="inv-platform" class="text-emerald-400 select-all font-bold">XM Global MT5</span></p>
-                        <p><span class="text-emerald-600">Server:</span> <span id="inv-server" class="text-emerald-400 select-all">XM-Global-MT5 03</span></p>
-                        <p><span class="text-emerald-600">Login ID:</span> <span id="inv-login" class="text-emerald-400 select-all">84291045</span></p>
-                        <p><span class="text-emerald-600">Investor Pass:</span> <span id="inv-pass" class="text-emerald-200 select-all">Shawon#Quant99!</span></p>
-                    </div>
-                </div>
-
-                <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-6">
-                    <a id="linkedin-link" href="#" target="_blank" rel="noopener noreferrer" class="group p-3 rounded-lg border border-emerald-500/30 hover:border-emerald-400 bg-black/60 hover:bg-emerald-950/30 transition-all duration-200 flex items-center justify-between">
-                        <div class="flex items-center gap-3 overflow-hidden">
-                            <div class="w-7 h-7 rounded bg-emerald-950 text-emerald-400 flex items-center justify-center shrink-0 border border-emerald-500/40">
-                                <i class="fa-brands fa-linkedin-in text-xs"></i>
-                            </div>
-                            <div class="overflow-hidden">
-                                <p class="text-xs font-semibold text-emerald-300 leading-tight group-hover:text-emerald-400">LinkedIn Net</p>
-                                <p class="text-[10px] font-mono text-emerald-600 truncate leading-tight mt-0.5">[linkedin.com/in/rayshudul](https://linkedin.com/in/rayshudul)</p>
-                            </div>
-                        </div>
-                        <i class="fa-solid fa-terminal text-[9px] text-emerald-600 group-hover:text-emerald-400 shrink-0 ml-2"></i>
-                    </a>
-
-                    <a id="email-link" href="#" class="group p-3 rounded-lg border border-emerald-500/30 hover:border-emerald-400 bg-black/60 hover:bg-emerald-950/30 transition-all duration-200 flex items-center justify-between">
-                        <div class="flex items-center gap-3 overflow-hidden">
-                            <div class="w-7 h-7 rounded bg-emerald-950 text-emerald-400 flex items-center justify-center shrink-0 border border-emerald-500/40">
-                                <i class="fa-solid fa-envelope text-xs"></i>
-                            </div>
-                            <div class="overflow-hidden">
-                                <p class="text-xs font-semibold text-emerald-300 leading-tight group-hover:text-emerald-400">Secure Mail</p>
-                                <p id="email-text" class="text-[10px] font-mono text-emerald-600 truncate leading-tight mt-0.5">contact@rayshudul.com</p>
-                            </div>
-                        </div>
-                        <i class="fa-solid fa-terminal text-[9px] text-emerald-600 group-hover:text-emerald-400 shrink-0 ml-2"></i>
-                    </a>
-                </div>
-            </div>
-
-            <div class="pt-3 border-t border-emerald-500/30 flex flex-col sm:flex-row items-center justify-between gap-2 text-[10px] font-mono text-emerald-600">
-                <div class="flex items-center gap-2">
-                    <span id="footer-copyright">© 2026 Md. Rayshudul Islam Shawon</span>
-                </div>
-                <div class="flex items-center gap-3">
-                    <span id="live-clock" class="text-emerald-400">00:00:00</span>
-                    <span class="text-emerald-500 font-bold">[ACCESS_GRANTED: 6YRS]</span>
-                </div>
-            </div>
-        </div>
-
+<div class="relative mb-6 flex justify-center group">
+    <div class="absolute -inset-1 bg-emerald-500/30 rounded-full blur animate-pulse"></div>
+    <div class="relative w-28 h-28 rounded-full p-1 bg-black border-2 border-emerald-500 overflow-hidden shadow-[0_0_15px_rgba(0,255,102,0.4)]">
+        <img id="profile-avatar" src="img/profile.jpg" alt="Profile" class="w-full h-full object-cover object-center rounded-full filter grayscale contrast-150 brightness-90">
     </div>
+</div>
+```[cite: 2]
 
-    <script src="config/site-config.js"></script>
-    <script src="assets/js/main.js"></script>
-</body>
-</html>
+### 2. `assets/css/style.css` (Auto-adjust / Object-fit fix)
+```css
+body {
+    background-color: #020b05;
+    overflow-x: hidden;
+    font-family: 'Courier New', Courier, monospace;
+}
+#matrix-canvas {
+    position: fixed;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 0;
+}
+.cyber-glow {
+    box-shadow: 0 0 20px rgba(0, 255, 102, 0.25), inset 0 0 15px rgba(0, 255, 102, 0.1);
+}
+.cyber-border {
+    border: 1px solid rgba(0, 255, 102, 0.4);
+}
+.text-glow {
+    text-shadow: 0 0 8px rgba(0, 255, 102, 0.6);
+}
+.scanlines {
+    background: linear-gradient(
+        to bottom,
+        rgba(255,255,255,0),
+        rgba(255,255,255,0) 50%,
+        rgba(0, 0, 0, 0.3) 50%,
+        rgba(0, 0, 0, 0.3)
+    );
+    background-size: 100% 4px;
+    pointer-events: none;
+}
+
+/* Profile Image Auto Adjust Fix */
+#profile-avatar {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+}
+```[cite: 2]
+
+### 3. `assets/js/main.js` (Avatar JS line remove kore dewa holo, jate age thekei pic show kore)
+```javascript
+window.addEventListener('DOMContentLoaded', () => {
+    // Load Dynamic Data from Config (Avatar image HTML-e thakbe, tai JS theke bad dewa holo)
+    document.getElementById('profile-name').innerText = SITE_CONFIG.profile.name;
+    document.getElementById('profile-title').innerText = SITE_CONFIG.profile.title;
+    document.getElementById('profile-bio').innerText = SITE_CONFIG.profile.bio;
+    document.getElementById('linkedin-link').href = SITE_CONFIG.profile.linkedin;
+    document.getElementById('email-link').href = `mailto:${SITE_CONFIG.profile.email}?subject=Secure%20Inquiry`;
+    document.getElementById('email-text').innerText = SITE_CONFIG.profile.email;
+
+    // Initialize Default Dropdowns from Config
+    updateCryptoPayment();
+    updateInvestorPlatform();
+
+    // Footer Year & Clock
+    const currentYear = new Date().getFullYear();
+    document.getElementById('footer-copyright').innerText = `© ${currentYear} ${SITE_CONFIG.profile.name}`;
+
+    setInterval(() => {
+        const now = new Date();
+        document.getElementById('live-clock').innerText = now.toLocaleTimeString();
+    }, 1000);
+
+    initMatrixCanvas();
+});
+
+// Matrix Digital Rain Animation
+function initMatrixCanvas() {
+    const canvas = document.getElementById('matrix-canvas');
+    const ctx = canvas.getContext('2d');
+
+    let width, height;
+
+    function resize() {
+        width = canvas.width = window.innerWidth;
+        height = canvas.height = window.innerHeight;
+    }
+
+    window.addEventListener('resize', resize);
+    resize();
+
+    const chars = '01ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789<>/\\{}[]*#$_-';
+    const fontSize = 14;
+    const columns = Math.floor(width / fontSize);
+    const drops = [];
+
+    for (let i = 0; i < columns; i++) {
+        drops[i] = Math.floor(Math.random() * -100);
+    }
+
+    function draw() {
+        ctx.fillStyle = 'rgba(2, 11, 5, 0.12)';
+        ctx.fillRect(0, 0, width, height);
+
+        ctx.fillStyle = '#00ff66';
+        ctx.font = fontSize + 'px monospace';
+
+        for (let i = 0; i < drops.length; i++) {
+            const text = chars.charAt(Math.floor(Math.random() * chars.length));
+            ctx.fillText(text, i * fontSize, drops[i] * fontSize);
+
+            if (drops[i] * fontSize > height && Math.random() > 0.975) {
+                drops[i] = 0;
+            }
+            drops[i]++;
+        }
+    }
+
+    setInterval(draw, 33);
+}
+
+// Crypto Payment Switcher
+function updateCryptoPayment() {
+    const select = document.getElementById('crypto-selector');
+    if (!select) return;
+    const selectedVal = select.value;
+    const data = SITE_CONFIG.cryptoWallets[selectedVal];
+
+    document.getElementById('crypto-label').innerText = data.label;
+    document.getElementById('crypto-address').innerText = data.address;
+    document.getElementById('qr-img').src = data.qr;
+}
+
+function copyAddress() {
+    const addressText = document.getElementById('crypto-address').innerText;
+    navigator.clipboard.writeText(addressText);
+    alert('Secure Crypto Hash Copied to Clipboard!');
+}
+
+// Trading Platforms Switcher
+function updateInvestorPlatform() {
+    const selElem = document.getElementById('platform-selector');
+    if (!selElem) return;
+    const sel = selElem.value;
+    const data = SITE_CONFIG.tradingNodes[sel];
+    document.getElementById('inv-platform').innerText = data.platform;
+    document.getElementById('inv-server').innerText = data.server;
+    document.getElementById('inv-login').innerText = data.login;
+    document.getElementById('inv-pass').innerText = data.pass;
+}
+
+// Toggle Credentials Decryption
+function toggleInvestorCredentials() {
+    const creds = document.getElementById('investor-credentials');
+    const eyeIcon = document.getElementById('eye-icon');
+    const toggleText = document.getElementById('toggle-text');
+
+    if (creds.classList.contains('hidden')) {
+        creds.classList.remove('hidden');
+        eyeIcon.classList.remove('fa-eye');
+        eyeIcon.classList.add('fa-eye-slash');
+        toggleText.innerText = "ENCRYPT";
+    } else {
+        creds.classList.add('hidden');
+        eyeIcon.classList.remove('fa-eye-slash');
+        eyeIcon.classList.add('fa-eye');
+        toggleText.innerText = "DECRYPT";
+    }
+}
+```[cite: 2]
+
+Ei changes guli korle ar kono shomossha thakbe na; je kono size-er image `img/profile.jpg` name dilei seta circle-er vhitore nicely adjust hoye jabe ebong page load howar sathei show korbe[cite: 2].
